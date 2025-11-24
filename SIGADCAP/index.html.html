@@ -1,0 +1,1305 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SIGAD-CAP — Plataforma de Gestión y Desarrollo de Personas</title>
+
+<style>
+:root{
+  --blue:#0d3c78;
+  --blue-dark:#08284f;
+  --gray:#6b6b6b;
+  --light:#f5f7fa;
+  --white:#ffffff;
+  --shadow:0 2px 6px rgba(0,0,0,0.08);
+  --radius:10px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light);
+  color:#1e1e1e;
+  overflow-x:hidden;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:18px 24px;
+  background:var(--white);
+  border-bottom:2px solid #dfe7f3;
+  box-shadow:var(--shadow);
+}
+
+.logo-h{
+  width:70px;
+  height:70px;
+  background:#dfe7f3;
+  border-radius:var(--radius);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  color:var(--blue);
+  font-size:22px;
+}
+
+.title{
+  font-size:22px;
+  color:var(--blue-dark);
+  font-weight:700;
+}
+
+.subtitle{
+  font-size:13px;
+  color:var(--gray);
+}
+
+/* LAYOUT APP MAIN */
+.container{
+  max-width:1400px;
+  margin:22px auto;
+  display:flex;
+  gap:20px;
+  padding:0 20px;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+  height:calc(100vh - 130px);
+  position:sticky;
+  top:24px;
+}
+
+.sidebar h3{
+  color:var(--blue-dark);
+  margin-bottom:14px;
+  font-size:17px;
+}
+
+.navbtn{
+  display:block;
+  padding:12px;
+  margin-bottom:8px;
+  background:#f1f4f8;
+  border-radius:var(--radius);
+  color:var(--blue-dark);
+  text-decoration:none;
+  font-size:15px;
+  transition:0.2s;
+  font-weight:500;
+}
+
+.navbtn:hover{
+  background:var(--blue);
+  color:white;
+}
+
+/* MAIN PANEL */
+.main{
+  flex:1;
+  background:var(--white);
+  padding:22px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  min-height:70vh;
+}
+
+.hidden{display:none}
+
+/* CARDS */
+.card{
+  background:var(--white);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+
+/* FORM */
+.form-row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:12px;
+}
+
+.input, textarea, select{
+  width:100%;
+  padding:10px;
+  border-radius:var(--radius);
+  border:1px solid #cdd7e5;
+  font-size:14px;
+}
+
+.btn{
+  padding:10px 16px;
+  background:var(--blue-dark);
+  color:white;
+  border:none;
+  border-radius:var(--radius);
+  cursor:pointer;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.btn:hover{
+  background:var(--blue);
+}
+
+/* TABLE */
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+  font-size:14px;
+}
+
+.table th{
+  background:#e5ecf6;
+  padding:10px;
+  color:var(--blue-dark);
+}
+
+.table td{
+  padding:9px;
+  border-bottom:1px solid #eaeaea;
+}
+
+/* LOGIN / PUBLIC FUNCIONARIOS */
+#login_screen{
+  padding:40px 20px;
+}
+
+#login_box{
+  max-width:380px;
+  margin:40px auto;
+  background:white;
+  padding:24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+/* PUBLIC FUNCIONARIOS */
+#func_public{
+  max-width:600px;
+  margin:30px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+/* SMALL TAGS */
+.badge{
+  display:inline-block;
+  padding:2px 6px;
+  border-radius:6px;
+  font-size:11px;
+  background:#e5ecf6;
+  color:#08284f;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENCABEZADO PRINCIPAL -->
+<div class="header">
+  <div class="logo-h">HCSF</div>
+  <div>
+    <h1 class="title">SIGAD-CAP</h1>
+    <p class="subtitle">Plataforma oficial de Gestión y Desarrollo de Personas</p>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- PANTALLA DE LOGIN RRHH   -->
+<!-- ======================== -->
+<div id="login_screen">
+  <div id="login_box">
+    <h2 style="text-align:center;color:#0d3c78;margin-top:0;margin-bottom:10px;">
+      Acceso RRHH
+    </h2>
+
+    <label>Usuario:</label>
+    <input id="login_user" type="text" class="input" style="margin-bottom:8px;">
+
+    <label>Contraseña:</label>
+    <input id="login_pass" type="password" class="input" style="margin-bottom:12px;">
+
+    <button onclick="loginRRHH()" class="btn" style="width:100%;margin-bottom:8px;">
+      Ingresar
+    </button>
+
+    <p style="text-align:center;margin-top:8px;font-size:13px;">
+      ¿Funcionario/a?&nbsp;
+      <a href="#" onclick="abrirAccesoFuncionarios();return false;" style="color:#0d3c78;">
+        Consultar por RUT
+      </a>
+    </p>
+  </div>
+</div>
+
+<!-- ======================== -->
+<!-- MODO FUNCIONARIO PÚBLICO  -->
+<!-- ======================== -->
+<div id="func_public" class="hidden">
+  <h2 style="margin-bottom:10px;color:#0d3c78;">Consulta de Anexo por RUT</h2>
+  <p style="font-size:13px;color:#555;margin-bottom:12px;">
+    Ingrese su RUT sin puntos (ej: 12345678-9) para visualizar su información de desempeño.
+  </p>
+
+  <label>RUT:</label>
+  <input id="rut_public_input" class="input" placeholder="Ejemplo: 12345678-9" style="margin-top:4px;">
+
+  <div style="margin-top:10px;display:flex;gap:8px;">
+    <button class="btn" onclick="buscarRUTPublic()">🔎 Buscar</button>
+    <button class="btn" style="background:#6b6b6b;" onclick="volverLogin()">Volver a inicio</button>
+  </div>
+
+  <div id="rut_public_result" style="margin-top:16px;font-size:14px;"></div>
+</div>
+
+<!-- ======================== -->
+<!-- APP PRINCIPAL (RRHH)     -->
+<!-- ======================== -->
+<div id="app_main" style="display:none;">
+
+  <div class="container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+      <h3>Menú Principal</h3>
+
+      <a href="#" class="navbtn" onclick="show('home')">🏠 Inicio</a>
+      <a href="#" class="navbtn" onclick="show('rrhh')">🗂 Panel RRHH</a>
+      <a href="#" class="navbtn" onclick="show('func')">🔎 Consulta Funcionarios</a>
+      <a href="#" class="navbtn" onclick="show('account')">👤 Mi cuenta</a>
+      <a href="#" class="navbtn" onclick="show('about')">ℹ Acerca de SIGAD-CAP</a>
+      <a href="#" class="navbtn" onclick="cerrarSesion()">Cerrar Sesión</a>
+    </aside>
+
+    <!-- PANEL PRINCIPAL -->
+    <main class="main">
+
+      <!-- INICIO -->
+      <section id="home">
+        <h2 style="margin-bottom: 10px;">Bienvenida/o a SIGAD-CAP</h2>
+        <p style="margin-bottom: 8px;">
+          Utilice el menú de la izquierda para gestionar los anexos de desempeño y consultar información de funcionarios.
+        </p>
+        <p style="font-size:13px;color:#555;">
+          <span class="badge">RRHH</span>
+          Acceso restringido al equipo de Gestión y Desarrollo de Personas.
+        </p>
+      </section>
+
+      <!-- PANEL RRHH -->
+      <section id="rrhh" class="hidden">
+        <h2>Panel RRHH</h2>
+
+        <!-- FORM REGISTRO DESEMPEÑO -->
+        <div class="card">
+          <h3>Ingresar nuevo registro de desempeño</h3>
+
+          <div class="form-row">
+            <div>
+              <label>Período</label>
+              <select id="r_period" class="input">
+                <option value="SEP-DIC">Sep - Dic</option>
+                <option value="ENE-ABR">Ene - Abr</option>
+                <option value="MAY-AGO">May - Ago</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Año</label>
+              <input id="r_year" type="number" class="input" min="2020" max="2100">
+            </div>
+
+            <div>
+              <label>RUT Funcionario/a</label>
+              <input id="r_rut" class="input" placeholder="12345678-9">
+            </div>
+
+            <div>
+              <label>Apellidos y Nombres</label>
+              <input id="r_name" class="input" placeholder="Se completa según RUT si existe en listado">
+            </div>
+
+            <div>
+              <label>N° Méritos</label>
+              <input type="number" id="r_merits" class="input" min="0" value="0">
+            </div>
+
+            <div>
+              <label>N° Deméritos</label>
+              <input type="number" id="r_demerits" class="input" min="0" value="0">
+            </div>
+
+            <div>
+              <label>Cursos</label>
+              <input id="r_courses" class="input">
+            </div>
+
+            <div>
+              <label>Atrasos (hh:mm)</label>
+              <input id="r_tardy" class="input">
+            </div>
+
+            <div>
+              <label>Ausencias</label>
+              <input type="number" id="r_abs" class="input" min="0" value="0">
+            </div>
+
+            <div>
+              <label>Medidas disciplinarias</label>
+              <input id="r_measures" class="input">
+            </div>
+
+            <div>
+              <label>N° Licencias</label>
+              <input type="number" id="r_lic" class="input" min="0" value="0">
+            </div>
+
+            <div>
+              <label>Total días licencia</label>
+              <input type="number" id="r_licdays" class="input" min="0" value="0">
+            </div>
+          </div>
+
+          <button class="btn" style="margin-top:12px;" onclick="addRecord()">➕ Agregar Registro</button>
+        </div>
+
+        <!-- AÑADIR FUNCIONARIO -->
+        <div class="card">
+          <h3>Ingresar nuevo funcionario (altas durante el año)</h3>
+          <div class="form-row">
+            <div>
+              <label>RUT (sin puntos, con guión)</label>
+              <input id="f_rut" class="input" placeholder="12345678-9">
+            </div>
+            <div>
+              <label>Apellidos y Nombres</label>
+              <input id="f_name" class="input" placeholder="APELLIDO APELLIDO NOMBRES">
+            </div>
+          </div>
+          <button class="btn" style="margin-top:10px;" onclick="addFuncionario()">➕ Guardar funcionario</button>
+          <p style="font-size:12px;color:#666;margin-top:6px;">
+            Estos funcionarios se suman al listado base vigente del hospital.
+          </p>
+        </div>
+
+        <!-- TABLA REGISTROS -->
+        <h3 style="margin-top:10px;">Registros cargados</h3>
+
+        <table class="table" id="rrhh_table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Período</th>
+              <th>Año</th>
+              <th>RUT</th>
+              <th>Nombre</th>
+              <th>M</th>
+              <th>D</th>
+              <th>Cursos</th>
+              <th>Atrasos</th>
+              <th>Ausencias</th>
+              <th>Lic.</th>
+              <th>Días</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- CONSULTA POR RUT (RRHH) -->
+      <section id="func" class="hidden">
+        <h2>Consulta Funcionarios por RUT</h2>
+        <p style="font-size:13px;color:#555;margin-bottom:10px;">
+          Busque por RUT para revisar los registros de desempeño y generar anexos.
+        </p>
+
+        <label>RUT:</label>
+        <input id="rut_input" class="input" placeholder="Ejemplo: 12345678-9" style="margin-top:4px;">
+
+        <button class="btn" style="margin-top:10px;" onclick="buscarRUTInterno()">🔎 Buscar</button>
+
+        <div id="rut_result" style="margin-top:16px;font-size:14px;"></div>
+      </section>
+
+      <!-- MI CUENTA -->
+      <section id="account" class="hidden">
+        <h2>Mi cuenta</h2>
+        <p style="font-size:13px;color:#555;margin-bottom:10px;">
+          Actualice su contraseña y datos básicos de contacto.
+        </p>
+
+        <div class="card">
+          <div class="form-row">
+            <div>
+              <label>Usuario</label>
+              <input id="acc_user" class="input" readonly>
+            </div>
+            <div>
+              <label>Nombre (opcional)</label>
+              <input id="acc_name" class="input" placeholder="Su nombre completo">
+            </div>
+            <div>
+              <label>Correo electrónico (opcional)</label>
+              <input id="acc_email" class="input" placeholder="usuario@correo.cl">
+            </div>
+          </div>
+
+          <hr style="margin:16px 0;">
+
+          <div class="form-row">
+            <div>
+              <label>Nueva contraseña</label>
+              <input id="acc_newpass" type="password" class="input">
+            </div>
+            <div>
+              <label>Repetir nueva contraseña</label>
+              <input id="acc_newpass2" type="password" class="input">
+            </div>
+          </div>
+
+          <button class="btn" style="margin-top:12px;" onclick="guardarCuenta()">💾 Guardar cambios</button>
+        </div>
+      </section>
+
+      <!-- ACERCA DE -->
+      <section id="about" class="hidden">
+        <h2>Acerca de SIGAD-CAP</h2>
+        <p style="margin-top:8px;">
+          Sistema de Gestión y Desarrollo de Personas diseñado para:
+        </p>
+        <ul style="margin-top:8px;margin-left:20px;font-size:14px;">
+          <li>Unificar los anexos de informe de desempeño.</li>
+          <li>Facilitar el acceso de funcionarios a su información vía RUT.</li>
+          <li>Registrar períodos de evaluación (Sep–Dic, Ene–Abr, May–Ago) por año.</li>
+          <li>Generar anexos imprimibles con formato institucional del hospital.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   NAVEGACIÓN ENTRE SECCIONES (RRHH)
+===================================================== */
+function show(id){
+  document.querySelectorAll("main section").forEach(s => s.classList.add("hidden"));
+  const target = document.getElementById(id);
+  if(target){ target.classList.remove("hidden"); }
+}
+
+/* =====================================================
+   UTILIDADES RUT
+===================================================== */
+function normalizarRutTexto(texto){
+  if(!texto) return "";
+  let v = texto.toString().trim().toUpperCase();
+  v = v.replace(/[^0-9K]/g,"");
+  if(v.length <= 1) return v;
+  return v.slice(0,-1) + "-" + v.slice(-1);
+}
+
+function formatearInputRut(el){
+  let v = el.value || "";
+  v = v.replace(/[^0-9kK]/g,"").toUpperCase();
+  if(v.length > 1){
+    el.value = v.slice(0,-1) + "-" + v.slice(-1);
+  }else{
+    el.value = v;
+  }
+}
+
+/* =====================================================
+   BASE DE DATOS LOCAL — REGISTROS (BD)
+===================================================== */
+let BD = JSON.parse(localStorage.getItem("SIGADCAP_REGISTROS") || "[]");
+
+function saveBD(){
+  localStorage.setItem("SIGADCAP_REGISTROS", JSON.stringify(BD));
+}
+
+/* =====================================================
+   FUNCIONARIOS — CARGA DESDE TEXTO + LOCALSTORAGE
+===================================================== */
+const RAW_FUNCIONARIOS = `
+5992743 4 PINO SANCHEZ MARIA NELLY
+7762951 3 SANTOS OVIEDO EMILIO ALBERTO
+7903807 5 ROA ELBERT FRANCISCO MATEO
+7945330 7 SANTOS SALAZAR HECTOR LUCIANO
+8647299 6 TORO VENEGAS ENRIQUE SEGUNDO
+8668211 7 BORDA QUIROZ NORA INES
+8896859 K FIERRO NAVARRETE JORGE GERARDO
+9134316 9 MORA GONZALEZ MARIA CECILIA
+9147566 9 CABRERA LEIVA MARIO ANTONIO
+9168577 9 GUENANTE INZUNZA MIRIAM LUZ
+9171447 7 HERRERA BUSTOS ERICA CRISTINA
+9185240 3 ROMERO HORMAZABAL MERCEDES DE LAS NIEVES
+9265623 3 MORA MORA MARIA ROSALBA
+9288641 7 PARRA COQUEDAN XIMENA DULCELINA
+9416209 2 ROSALES ESPINOZA PATRICIA EUGENIA
+9435832 9 CORTES VELASQUEZ ELIER ANTONIA
+9438794 9 GARCIA DIAZ MARCOS SERGIO
+9619203 7 VEGA SOTO MARTA ROSA
+9739881 K RUBILAR GARCIA ADRIANA ISABEL
+9812818 2 GONZALEZ QUEZADA LEONARDO ALAN
+9834061 0 TOLEDO ULLOA GINA DEL TRANSITO
+9836774 8 MOLINA URRUTIA MARISOL DEL CARMEN
+10010252 8 GONZALEZ QUEZADA MARGOT CECILIA
+10022214 0 MATAMALA RIVAS LUISIDORO FERMIN
+10164317 4 RIQUELME LARA MARIA ISABEL
+10178651 K TORRES MENDOZA OLIMPIA SANDRA
+10287521 4 ZAPATA GAJARDO BERTA DEL ROSARIO
+10299404 3 SEPULVEDA MUÑOZ LUZ ALBINA
+10408963 1 IBAÑEZ PLAZA DE LOS RE GUILLERMO EDUARDO
+10721848 3 RETAMAL AVENDAÑO MARGARITA DE LAS MERCEDES
+10792089 7 SEPULVEDA COFRE IRLANDA JIMENA
+10812282 K PEREZ MORA EULOGIA PAULINA
+11234901 4 MORA MORAGA MARIA TERESA
+11234923 5 MORAGA QUIROZ HILDA ALEJANDRA
+11235039 K NEIRA ANDAUR JUAN ANDRES
+11235152 3 BAZA COQUEDAN GABRIELA JAQUELINNE
+11301694 9 CALFUNAO COÑOENAO HERNA RUTH
+11445044 8 DURAN FUENTES NELLY DEL CARMEN
+11533914 1 PRADENAS ALARCON MARCELO ALEJANDRO
+11533949 4 ESPINOZA RAMIREZ YESSICA ANDREA
+11534204 5 SALGADO CARRASCO LUZ ADRIANA
+11534226 6 REYES PARRA SANDRA CLEMIRA
+11956641 K ARAYA BUSTOS MARCELA ORIANA
+11956730 0 ARANEDA GARRIDO ANA MARIA
+11956946 K SALGADO CARRASCO INGRID MARLENE
+12138549 K TORRES ROMERO ROXANA PAOLA
+12197747 8 QUEZADA RIFO EVA FILOMENA
+12379263 7 REYES MUÑOZ MAGALY LAS MERCEDES
+12531439 2 MUÑOZ ABURTO IRIS CATALINA
+12548384 4 SOLIS DOMINGUEZ LORENA CARMEN
+12548488 3 LAGOS PEREZ MAURICIO ESTEBAN
+12706791 0 SAN MARTIN BARRAGAN NINOSKA DENIS
+12762716 9 CASTILLO OSORIO MARCELA ANDREA
+12762885 8 SOTO PARRA CLAUDIA MARITZA
+12762893 9 URIBE ASCENCIO SANDRA ANGELICA
+12763243 K SANHUEZA ALARCON ANDREA ALEJANDRA
+12794466 0 YEVENES VERA MARIA EUGENIA
+12967994 8 FIGUEROA NEIRA IVONNE JULIET
+12968071 7 PARRA PUENTES ELISA CARMEN
+12968074 1 MUÑOZ VERA ALEXIS HERNAN
+12968300 7 SALGADO NEIRA KARLA SOLEDAD
+12968389 9 FLORES AVENDAÑO BETSANIA SAYETH
+12978201 3 BRIONES MORA IRENE CATALINA
+13128039 4 MUÑOZ SALAS VALERIA ESTER
+13376659 6 PEDREROS CEBALLOS SILVANA FABIOLA
+13376762 2 OLIVARES CERRO MONICA MIREYA
+13508495 6 MANRIQUEZ NEIRA ALVARO EDUARDO
+13618353 2 MENA ALARCON GLORIA MACKARENNA
+13618552 7 JABRES AVENDAÑO JULIO ALEJANDRO
+13618616 7 RODRIGUEZ ROMERO MARIA ANGELICA
+13618804 6 MENDOZA RIOS BARBARA ELIZABETH
+13620390 8 GUTIERREZ SOLORZA LIZETTE VERONICA
+13792687 3 PARRA SALAZAR ANGELA CECILIA
+13794566 5 MENDOZA PARRA KARINA ARLETTE
+13794661 0 LAGOS LAGOS MAURICIO ALEJANDRO
+13794732 3 FLORES BUSTOS MABEL JORDAHANA
+13794868 0 GUTIERREZ ESPARZA JOSE MANUEL
+13859028 3 COVARRUBIAS GUAJARDO KARIN SOLANGE
+13957842 2 SILVA CABEZAS ALEJANDRA VANESSA
+13972156 K GONZALEZ SEPULVEDA ANTONIO ELISEO
+13972190 K MONSALVE MOLINA FREDY ARIEL
+13972475 5 CERRO SAAVEDRA DANIEL ANTONIO
+14025476 2 ORTIZ CONTRERAS KARINA ALEJANDRA
+14058567 K CARTES MEDEL AURELIA PAULINA
+14243469 5 MARIN MUÑOZ CARLOS ALEJANDRO
+14353903 2 PINO SEPULVEDA PATRICIA IVONNE
+14360834 4 MELGAREJO MUÑOZ JOHANA SOLEDAD
+14375487 1 HENRIQUEZ ARAVENA XIMENA ANDREA
+14375492 8 SAAVEDRA SANHUEZA LUCIA ANA
+15146588 9 CHANDIA ESPINOZA SONIA DE LAS MERCEDES
+15158405 5 SOTO ESPINOSA SERGIO ANDRES
+15158812 3 RIVAS ALARCON ALFREDO ANDRES
+15159353 4 MONTECINOS GAETE YINETTE PETRONILA
+15171320 3 PALMA CHANDIA NELSON RODRIGO
+15171383 1 REYES MARTINEZ CAROLINA ANDREA
+15171644 K SAAVEDRA PEÑAILILLO PEDRO PATRICIO
+15171897 3 ARRIAGADA MORAGA VIVIANA ANDREA
+15171998 8 ALARCON ALARCON ALVARO ANTONIO
+15172016 1 VERA ZAPATA IRMA LETISIA
+15172078 1 TORO ESCOBAR CINTIA ANTONELLA
+15172270 9 MARIN MONSALVE PAMELA ESTER
+15172321 7 PEDREROS NOVA JAIME ELIZARDO
+15172322 5 ESPARZA CARRASCO ROBERTO JONATHAN
+15172383 7 CID RIOS JOSE MIGUEL
+15172634 8 MUÑOZ BAUTISTA JUANA VICTORIA
+15172653 4 VERA TRONCOSO VALESKA MARGARITA
+15216628 1 VENEGAS CEA ANDREA ALEXANDRA
+15220395 0 MUÑOZ CASTAÑEDA CRISTINA
+15259930 7 JENO SAN MARTIN ANDREA ALEJANDRA
+15615443 1 ANDRADE SALAZAR VERONICA INES
+15670721 K CISTERNAS ESCALONA LUCIANO ANTONIO
+15876680 9 FERNANDEZ GAJARDO JUAN FRANCISCO
+15928758 0 TORO BENAVIDES FABIAN ANDRES
+16011183 6 NEIRA MALDONADO OMAR ALEXANDER
+16033310 3 URRA CONTRERAS KATTERINNE DANIELA
+16119940 0 RAMOS CONCHA GENOVEVA DEL CARMEN
+16151879 4 JARA WEISSER LAURA SOFIA
+16153337 8 GAETE RETAMAL NICOLAS JAVIER
+16153666 0 FUENTES MACHUCA CHYNTIA SOLEDAD
+16228491 6 SANHUEZA BRAVO PAULA CONSTANZA
+16284736 8 ACEVEDO PUENTES LORETO STEPHANIE
+16404522 6 NOVA ESPINOZA JONNATHAN ISRAEL
+16404728 8 PARRA CHAVEZ YASNA PAMELA
+16404831 4 CEBALLOS RAMIREZ VALENTINA ANDREA
+16404843 8 GARRIDO RIQUELME FRANCISCA JAVIERA
+16404898 5 NEIRA CEBALLOS LEIDY ANTONELA
+16620363 5 LAGOS LAGOS MARIA JOSE
+16620471 2 RIQUELME CONSTANZO JESSICA SABRINA
+16620516 6 NOVA VERGARA MARIBEL DEL CARMEN
+16620575 1 LAGOS FLORES KARINA ELIZABETH
+16620584 0 TORO ESCOBAR YESSENIA MARGARITA
+16620721 5 POBLETE SILVA FERNANDA ANDREA
+16620741 K TORRES TORO ISMAEL ALEJANDRO
+16620753 3 CONSTANZO CARTES ROSA ANGELICA
+16620768 1 CERDA COTAL PAMELA DEL ROSARIO
+16783003 K MARTINEZ MARTINEZ ANDREA DEL PILAR
+16807921 4 SALDIAS GONZALEZ GERALD IVAN
+16890750 8 VILLOUTA COLLANTE ABIGAIL SOLANGE
+16897406 K SAN MARTIN LORENS MARIA JOSE
+16980861 9 HORSTMEIER OJEDA MILENA WALESKA
+17043275 4 HANSEN SALAZAR MACARENA FRANCISCA
+17044370 5 BUGMANN PINTO MARIA LORENA
+17045851 6 BINIMELIS ROA CATALINA ESTER
+17055663 1 ROA MORAGA FRANCISCO ANDRES
+17055689 5 VERGARA VILLARROEL ELISA ANDREA
+17055769 7 CONCHA BAUTISTA IVONNE ALEJANDRA
+17055843 K GUTIERREZ SALGADO CAMILA FRANCISCA
+17055901 0 VALDES PEDREROS ANDREA ELENA
+17183150 4 TORRES GONZALEZ JONNATHAN ALEXIS
+17205966 K DIAZ MENDOZA GLORIA STEPHANIE
+17206171 0 SALAS REYES VERONICA ISABEL
+17217850 2 CAMPOS NEIRA GISELLA MACKARENA
+17217870 7 GONZALEZ RIQUELME JIMMY ALAN
+17217873 1 GARCIA SEPULVEDA YARITZA ORNELLA
+17217939 8 FERRADA TORO MARICELA ANDREA
+17217995 9 TORO LAGOS PATRICIA ANDREA
+17344742 6 VALENZUELA HAPETTE MATIAS CRISTIAN
+17345500 3 SANCHEZ MUÑOZ ALVARO NICOLAS
+17350994 4 PEREZ PARRA YARIGZA YASMINA
+17395463 8 CASANOVA CASANOVA LINA MERCEDES
+17570386 1 HERMOSILLA HERMOSILLA SAMUEL ANDRES
+17571267 4 ARANEDA MUÑOZ NICOLE VISLANDA
+17636848 9 VERA CHANDIA MARISOL ESTER
+17636888 8 PARRA CUADRA JUDITH NICOLE
+17636946 9 URRA CONTRERAS GLADYS CAROLINE
+17637076 9 MALDONADO SAAVEDRA CARLOS HORACIO
+17637222 2 SALAS SILVA FRESIA NICOLE
+17637310 5 ARCE SEPULVEDA CLAUDIA ALEJANDRA
+17640014 5 SOLIS BELLO ALEXANDRA YENESIA
+17640063 3 CORTEZ RETAMAL BARBARA ANDREA
+17640095 1 MORALES SALGADO MARCIA ANGELICA
+17640247 4 MARTINEZ BAUTISTA YULISSA YOLANDA
+17640886 3 SOTO RIVAS VIVIAN LOREDANA
+17749589 1 PARRA BAHAMONDES FRANCISCA NICOLE
+17761614 1 ESPINOZA VERA ANA SOLEDAD
+17900035 0 SANHUEZA RODRIGUEZ EVELYN XIMENA
+18260051 2 VILLEGAS SEPULVEDA CONSTANZA PAZ
+18260089 K FAUNDEZ LAGOS KIMBERLY ANAXIS
+18260090 3 GONZALEZ QUIROZ CARMEN GLORIA
+18260264 7 CARVAJAL MUÑOZ CAROLINA ALEXANDRA
+18260298 1 ALVAREZ GONZALEZ JUAN GUILLERMO
+18361783 4 MARTEL FLORES MARIA FERNANDA
+18388319 4 RAMIREZ MORA MAIRA FRANCISCA
+18411358 9 TRONCOSO MORAGA SEBASTIAN NICOLAS
+18411734 7 OTERO ABARCA OLIVIA ALEJANDRA
+18430129 6 ACUÑA CORREA TOMAS HUMBERTO
+18430598 4 VALDEBENITO REYES PAMELA ALEJANDRA
+18548963 9 LEAL ARAVENA CAMILA ALEXANDRA
+18549064 5 ORTIZ CHANDIA BEATRIZ VERONICA
+18549164 1 QUEZADA CHANDIA CAMILA ANDREA
+18549177 3 BAEZA SEPULVEDA MATIAS ANTONIO
+18592848 9 SAAVEDRA FUENTES JUANITA PAOLA
+18681439 8 PIZARRO AVILA MARIBEL ADRIANA
+18791867 7 CAMPUSANO TOLEDO CAMILA VANESSA
+18808015 4 PEDREROS MOLINA ROMINA ANDREA
+18828133 8 CONCHA BUSTOS SEBASTIAN PATRICIO
+18896070 7 REBOLLEDO VALDES JONHY ANTONY
+18896091 K MEDINA MELO CONSTANZA DANIELA
+18896133 9 VILLEGAS BAEZA ARNOLDO ESTEBAN
+18896342 0 CONSTANZO VERA ROSA EMILIA
+18896351 K CABRERA FLORES ALISON ANDREA
+18896438 9 FAURE SEPULVEDA JENNIFER NOEMI
+18942339 K STUMPF CARRASCO SHAHIRA SOAD
+19088582 8 CHAVEZ INYACO ALEXANDRA ESTER
+19098300 5 INOSTROZA INOSTROZA NOEMI ANGELICA
+19251340 5 ROMERO VALENZUELA BELEN VANESSA
+19251357 K RIVAS PLACENCIA JUAN DAVID
+19251401 0 QUEZADA NOVA ISIDORA MONTSERRAT
+19251431 2 CASTILLO BAUTISTA VALENTINA DEL PILAR
+19251464 9 OPAZO MONSALVE CAMILA JEANNETTE
+19251672 2 ZAPATA RETAMAL ESTEFANIA ANDREA
+19251742 7 CAMPOS NEIRA JOSE ALFREDO
+19365067 8 MUÑOZ ESCOBAR NAYADETH NOEMI
+19365272 7 GONZALEZ RIQUELME FELIPE FRANCISCO
+19417560 4 LAGOS SANTANA BELEN ALEJANDRA
+19436899 2 MENDEZ CASTILLO JAVIERA VALENTINA
+19512768 9 CRUZ SOTO FERNANDA ISIDORA
+19624408 5 URRUTIA GARCIA ISIDORA JESUS
+19651352 3 VALENZUELA CANCINO BRIAN IVAN
+19651854 1 PARRA SEGUEL ANA CATALINA
+19663062 7 CRUCES ESPINOZA JAIME ALONSO
+19663066 K VILLABLANCA SANHUEZA KATHERINE ANDREA
+19663085 6 CARRASCO SILVA DANIKSA ALEJANDRA
+19663132 1 VENEGAS LOPEZ ANA LAURA
+19663189 5 MUÑOZ HENRIQUEZ MARJORIE LISSETTE
+19663251 4 GONZALEZ SAAVEDRA ESTEFANIA ALEXANDRA
+19663262 K MUÑOZ ESCOBAR DUVAN ISRAEL
+19663267 0 SANDOVAL TOLEDO WILLIAMS LEVI ALEJANDRO
+19663307 3 VENEGAS LOPEZ PATRICIA ANGELICA
+19743702 2 MULLER HENRIQUEZ MATIAS IGNACIO
+19812107 K BURGOS RAMOS AIELEN MAIVE
+19821389 6 ARAVENA CONSTANZO VICTORIA ESTEFANIA
+19821688 7 CADENAS CANDIA ANDREA LETICIA
+19927922 K PALMA SAAVEDRA SCARLET DANITZA
+19952767 3 PARRA RIVAS DAVID ANTONIO
+19952820 3 SERRANO ZAPATA EDUARDO MAXIMILIANO
+19952953 6 HENRIQUEZ SILVA CATERINE MACARENA
+19953096 8 SOLIS CARTES VERONICA ALEJANDRA
+19953115 8 IBARRA MUÑOZ YENIFER DE LA ROSA
+20023263 1 CABRERA CID ALEXANDRA MACARENA
+20063617 1 CARDONA ACUÑA CAMILA ANDREA
+20077326 8 ANDRADES PEREZ FRANCISCA JAVIERA
+20077702 6 RUIZ NEIRA SIGRID EMA
+20153989 7 BASTIAS NEIRA NATALY SCARLETTE
+20255781 3 ESCOBAR RENJIFO RODRIGO ESTEBAN
+20257325 8 ROSAS SILVA JAVIER IGNACIO
+20268822 5 GONZALEZ MANCILLA ARIEL ALEJANDRO
+20373380 1 BUSTOS SEPULVEDA VIVIANA ALEJANDRA
+20373594 4 SANCHEZ JOFRE MARCO ENRIQUE
+20386283 0 LAGOS ARENA KARLA ANDREA
+20386374 8 ZAPATA CONCHA MACKARENA ALEXANDRA
+20767878 3 ZAPATA ARROYO JAVIER ESTEBAN
+20811531 6 MORAGA ORTIZ FERNANDA DANIELA
+20811560 K SEPULVEDA ZAPATA DAFNE ALEJANDRA
+21403919 2 CROUCHETT LAGOS MARTINA BELEN
+21692845 8 PARRA RIVAS BASTIAN LEONARDO
+21729801 6 PALMA ARTEAGA DANIELA EUGENIA
+23036732 9 ESPINOZA CHACIN JOSBEL DAVID
+27168277 8 ALVAREZ NOGUERA ERIKA MIREALYS
+`;
+
+function parseFuncionarios(raw){
+  const list = [];
+  raw.split(/\r?\n/).forEach(line=>{
+    const t = line.trim();
+    if(!t) return;
+    const parts = t.split(/\s+/);
+    if(parts.length < 3) return;
+    const base = parts[0];
+    let dv = parts[1].toUpperCase();
+    if(dv === 'Ñ') dv = 'N'; // por si algún raro
+    const name = parts.slice(2).join(" ");
+    list.push({
+      rut: normalizarRutTexto(base + dv),
+      name: name
+    });
+  });
+  return list;
+}
+
+let FU = [];
+
+function loadFuncionarios(){
+  const stored = localStorage.getItem("SIGADCAP_FUNCIONARIOS");
+  if(stored){
+    FU = JSON.parse(stored);
+  }else{
+    FU = parseFuncionarios(RAW_FUNCIONARIOS);
+    localStorage.setItem("SIGADCAP_FUNCIONARIOS", JSON.stringify(FU));
+  }
+}
+
+function saveFuncionarios(){
+  localStorage.setItem("SIGADCAP_FUNCIONARIOS", JSON.stringify(FU));
+}
+
+/* Añadir nuevo funcionario desde formulario RRHH */
+function addFuncionario(){
+  const rutInput = document.getElementById("f_rut");
+  const nameInput = document.getElementById("f_name");
+  let rut = normalizarRutTexto(rutInput.value);
+  const name = (nameInput.value || "").trim().toUpperCase();
+
+  if(!rut || !name){
+    alert("Debe ingresar RUT y nombre del funcionario.");
+    return;
+  }
+
+  if(FU.find(f => f.rut === rut)){
+    alert("Ese RUT ya existe en el listado de funcionarios.");
+    return;
+  }
+
+  FU.push({rut, name});
+  saveFuncionarios();
+  alert("Funcionario añadido correctamente al listado.");
+  rutInput.value = "";
+  nameInput.value = "";
+}
+
+/* Buscar funcionario por RUT en listado FU */
+function findFuncionarioByRut(rut){
+  const norm = normalizarRutTexto(rut);
+  return FU.find(f => f.rut === norm) || null;
+}
+
+/* =====================================================
+   LOGIN — USUARIOS RRHH
+===================================================== */
+let SIGADCAP_USERS = JSON.parse(localStorage.getItem("SIGADCAP_USERS") || "{}");
+let SIGADCAP_PROFILE = JSON.parse(localStorage.getItem("SIGADCAP_PROFILE") || "{}");
+
+function saveUsers(){
+  localStorage.setItem("SIGADCAP_USERS", JSON.stringify(SIGADCAP_USERS));
+}
+
+function saveProfiles(){
+  localStorage.setItem("SIGADCAP_PROFILE", JSON.stringify(SIGADCAP_PROFILE));
+}
+
+function createUser(username, password){
+  SIGADCAP_USERS[username] = {
+    pass: password,
+    mustChange: true,
+    created: new Date().toLocaleString()
+  };
+}
+
+/* Seed usuarios iniciales si no hay ninguno */
+function seedDefaultUsers(){
+  if(Object.keys(SIGADCAP_USERS).length > 0) return;
+
+  const defaults = [
+    {u:"jmunoz",    p:"munoz2025"},     // Juana Muñoz Bautista
+    {u:"mramirez",  p:"ramirez2025"},   // Maira Francisca Ramirez
+    {u:"mgonzalez", p:"gonzalez2025"},  // Margot González
+    {u:"rtorres",   p:"torres2025"},    // Roxana Torres
+    {u:"nneira",    p:"bastias2025"},   // Nataly Neira Bastías
+    {u:"calarcon",  p:"alarcon2025"}    // Tú :)
+  ];
+
+  defaults.forEach(d => createUser(d.u, d.p));
+  saveUsers();
+}
+
+function loginRRHH(){
+  const u = document.getElementById("login_user").value.trim();
+  const p = document.getElementById("login_pass").value.trim();
+
+  if(!SIGADCAP_USERS[u]){
+    alert("Usuario no existe");
+    return;
+  }
+  if(SIGADCAP_USERS[u].pass !== p){
+    alert("Contraseña incorrecta");
+    return;
+  }
+  iniciarSesion(u);
+}
+
+/* =====================================================
+   SESIÓN
+===================================================== */
+function iniciarSesion(usuario){
+  localStorage.setItem("SIGADCAP_SESSION", usuario);
+  afterLoginUI();
+}
+
+function afterLoginUI(){
+  const login = document.getElementById("login_screen");
+  const app = document.getElementById("app_main");
+  const funcPub = document.getElementById("func_public");
+  if(login) login.classList.add("hidden");
+  if(funcPub) funcPub.classList.add("hidden");
+  if(app) app.style.display = "block";
+  show("home");
+
+  const u = localStorage.getItem("SIGADCAP_SESSION");
+  if(!u) return;
+
+  // Cargar datos a "Mi cuenta"
+  const accUser = document.getElementById("acc_user");
+  const accName = document.getElementById("acc_name");
+  const accEmail = document.getElementById("acc_email");
+  if(accUser) accUser.value = u;
+  const profile = SIGADCAP_PROFILE[u] || {};
+  if(accName) accName.value = profile.name || "";
+  if(accEmail) accEmail.value = profile.email || "";
+
+  // Si debe cambiar contraseña, lo mandamos a Mi cuenta
+  if(SIGADCAP_USERS[u] && SIGADCAP_USERS[u].mustChange){
+    alert("Por seguridad, cambie su contraseña en 'Mi cuenta'.");
+    show("account");
+  }
+}
+
+function cerrarSesion(){
+  localStorage.removeItem("SIGADCAP_SESSION");
+  alert("Sesión cerrada.");
+  location.reload();
+}
+
+/* Guardar cambios en Mi cuenta */
+function guardarCuenta(){
+  const u = localStorage.getItem("SIGADCAP_SESSION");
+  if(!u){
+    alert("Sesión no encontrada.");
+    return;
+  }
+  const name = (document.getElementById("acc_name").value || "").trim();
+  const email = (document.getElementById("acc_email").value || "").trim();
+  const newpass = document.getElementById("acc_newpass").value;
+  const newpass2 = document.getElementById("acc_newpass2").value;
+
+  SIGADCAP_PROFILE[u] = {name, email};
+  saveProfiles();
+
+  if(newpass || newpass2){
+    if(newpass !== newpass2){
+      alert("Las contraseñas nuevas no coinciden.");
+      return;
+    }
+    if(newpass.length < 4){
+      alert("La contraseña debe tener al menos 4 caracteres.");
+      return;
+    }
+    SIGADCAP_USERS[u].pass = newpass;
+    SIGADCAP_USERS[u].mustChange = false;
+    saveUsers();
+    document.getElementById("acc_newpass").value = "";
+    document.getElementById("acc_newpass2").value = "";
+    alert("Datos y contraseña actualizados.");
+  }else{
+    alert("Datos de perfil guardados.");
+  }
+}
+
+/* =====================================================
+   ACCESO FUNCIONARIOS PÚBLICO
+===================================================== */
+function abrirAccesoFuncionarios(){
+  const login = document.getElementById("login_screen");
+  const funcPub = document.getElementById("func_public");
+  const app = document.getElementById("app_main");
+  if(app) app.style.display = "none";
+  if(login) login.classList.add("hidden");
+  if(funcPub) funcPub.classList.remove("hidden");
+}
+
+function volverLogin(){
+  const login = document.getElementById("login_screen");
+  const funcPub = document.getElementById("func_public");
+  if(funcPub) funcPub.classList.add("hidden");
+  if(login) login.classList.remove("hidden");
+}
+
+/* =====================================================
+   REGISTRO DESEMPEÑO (RRHH)
+===================================================== */
+function addRecord(){
+  const period = document.getElementById("r_period").value;
+  const year = Number(document.getElementById("r_year").value);
+  let rut = normalizarRutTexto(document.getElementById("r_rut").value);
+  let name = (document.getElementById("r_name").value || "").trim().toUpperCase();
+
+  if(!year || year < 2020){
+    alert("Debe indicar un año válido.");
+    return;
+  }
+  if(!rut){
+    alert("Debe ingresar el RUT del funcionario.");
+    return;
+  }
+
+  const f = findFuncionarioByRut(rut);
+  if(f && !name){
+    name = f.name;
+  }
+  if(!name){
+    alert("Debe ingresar el nombre del funcionario.");
+    return;
+  }
+
+  const registro = {
+    period,
+    year,
+    rut,
+    name,
+    merits: Number(document.getElementById("r_merits").value || 0),
+    demerits: Number(document.getElementById("r_demerits").value || 0),
+    courses: (document.getElementById("r_courses").value || "").trim().toUpperCase(),
+    tardy: (document.getElementById("r_tardy").value || "").trim(),
+    abs: Number(document.getElementById("r_abs").value || 0),
+    measures: (document.getElementById("r_measures").value || "").trim().toUpperCase(),
+    lic: Number(document.getElementById("r_lic").value || 0),
+    licdays: Number(document.getElementById("r_licdays").value || 0),
+    createdBy: localStorage.getItem("SIGADCAP_SESSION") || "",
+    createdAt: new Date().toLocaleString(),
+    updatedBy: localStorage.getItem("SIGADCAP_SESSION") || "",
+    updatedAt: new Date().toLocaleString()
+  };
+
+  BD.push(registro);
+  saveBD();
+  renderRRHH();
+  alert("Registro agregado correctamente.");
+}
+
+/* Render tabla RRHH */
+function renderRRHH(){
+  const tbody = document.querySelector("#rrhh_table tbody");
+  if(!tbody) return;
+  tbody.innerHTML = "";
+
+  BD.forEach((r, i) => {
+    const fila = document.createElement("tr");
+    const periodoTxt = r.period || "";
+    fila.innerHTML = `
+      <td>${i+1}</td>
+      <td>${periodoTxt}</td>
+      <td>${r.year || ""}</td>
+      <td>${r.rut || ""}</td>
+      <td>${r.name || ""}</td>
+      <td>${r.merits}</td>
+      <td>${r.demerits}</td>
+      <td>${r.courses}</td>
+      <td>${r.tardy}</td>
+      <td>${r.abs}</td>
+      <td>${r.lic}</td>
+      <td>${r.licdays}</td>
+      <td><button class="btn" style="padding:4px 8px;font-size:12px;" onclick="genPDF(${i})">Imprimir</button></td>
+    `;
+    tbody.appendChild(fila);
+  });
+}
+
+/* =====================================================
+   BÚSQUEDA POR RUT — INTERNOS (RRHH)
+===================================================== */
+function construirTablaRegistrosPorRut(rut){
+  const registros = BD.filter(r => r.rut === normalizarRutTexto(rut));
+  if(registros.length === 0){
+    return "<p style='color:#a00;'>No hay registros de desempeño cargados para este RUT.</p>";
+  }
+
+  let html = `<h3>Registros de desempeño</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Período</th><th>Año</th><th>M</th><th>D</th><th>Cursos</th><th>Atrasos</th><th>Ausencias</th><th>Lic.</th><th>Días</th><th>PDF</th>
+        </tr>
+      </thead>
+      <tbody>`;
+  registros.forEach((r, idx) => {
+    const indexGlobal = BD.indexOf(r);
+    html += `
+      <tr>
+        <td>${idx+1}</td>
+        <td>${r.period}</td>
+        <td>${r.year}</td>
+        <td>${r.merits}</td>
+        <td>${r.demerits}</td>
+        <td>${r.courses}</td>
+        <td>${r.tardy}</td>
+        <td>${r.abs}</td>
+        <td>${r.lic}</td>
+        <td>${r.licdays}</td>
+        <td><button class="btn" style="padding:3px 6px;font-size:12px;" onclick="genPDF(${indexGlobal})">Imprimir</button></td>
+      </tr>`;
+  });
+  html += "</tbody></table>";
+  return html;
+}
+
+function buscarRUTInterno(){
+  const rutIngresado = document.getElementById("rut_input").value.trim();
+  const caja = document.getElementById("rut_result");
+  const norm = normalizarRutTexto(rutIngresado);
+
+  if(!norm.includes("-")){
+    caja.innerHTML = `<p style="color:red">Formato inválido. Ejemplo: 12345678-9</p>`;
+    return;
+  }
+
+  const func = findFuncionarioByRut(norm);
+
+  let html = "";
+  if(func){
+    html += `<p><strong>Nombre:</strong> ${func.name}</p>
+             <p><strong>RUT:</strong> ${func.rut}</p>`;
+  }else{
+    html += `<p><strong>RUT:</strong> ${norm}</p>
+             <p style="color:#a00;">Este RUT no está en el listado base de funcionarios, pero puede tener registros cargados igualmente.</p>`;
+  }
+
+  html += construirTablaRegistrosPorRut(norm);
+
+  caja.innerHTML = html;
+}
+
+/* =====================================================
+   BÚSQUEDA POR RUT — PÚBLICO FUNCIONARIOS
+===================================================== */
+function buscarRUTPublic(){
+  const rutIngresado = document.getElementById("rut_public_input").value.trim();
+  const caja = document.getElementById("rut_public_result");
+  const norm = normalizarRutTexto(rutIngresado);
+
+  if(!norm || !norm.includes("-")){
+    caja.innerHTML = `<p style="color:red">Ingrese un RUT válido. Ejemplo: 12345678-9</p>`;
+    return;
+  }
+
+  const func = findFuncionarioByRut(norm);
+  let html = "";
+
+  if(func){
+    html += `<p><strong>Nombre:</strong> ${func.name}</p>
+             <p><strong>RUT:</strong> ${func.rut}</p>`;
+  }else{
+    html += `<p><strong>RUT:</strong> ${norm}</p>
+             <p style="color:#a00;">Su RUT no se encuentra en el listado base publicado. Si considera que es un error, contacte a RRHH.</p>`;
+  }
+
+  html += construirTablaRegistrosPorRut(norm);
+
+  caja.innerHTML = html;
+}
+
+/* =====================================================
+   GENERAR PDF — ANEXO INFORME DE DESEMPEÑO
+===================================================== */
+function genPDF(i){
+  const f = BD[i];
+  if(!f){
+    alert("Registro no encontrado.");
+    return;
+  }
+
+  const periodoTexto = f.period + " " + (f.year || "");
+  const w = window.open("", "_blank");
+  w.document.write(`
+    <html>
+    <head><title>Anexo de Desempeño</title></head>
+    <body style="font-family:'Times New Roman',serif; padding:40px;">
+
+      <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+        <tr>
+          <td style="width:90px;vertical-align:top;">
+            <img src="LOGO HOSPITAL.png" style="max-width:80px;max-height:80px;">
+          </td>
+          <td style="text-align:center;vertical-align:middle;font-weight:bold;font-size:16px;">
+            ANEXO INFORME DE DESEMPEÑO
+          </td>
+          <td style="width:160px;text-align:right;vertical-align:top;font-size:12px;">
+            <div><strong>Período:</strong><br>${periodoTexto}</div>
+          </td>
+        </tr>
+      </table>
+
+      <hr style="margin-bottom:20px;">
+
+      <p><strong>Nombre funcionario/a:</strong> ${f.name}</p>
+      <p><strong>RUT:</strong> ${f.rut}</p>
+      <p><strong>Méritos:</strong> ${f.merits}</p>
+      <p><strong>Deméritos:</strong> ${f.demerits}</p>
+      <p><strong>Cursos:</strong> ${f.courses}</p>
+      <p><strong>Atrasos:</strong> ${f.tardy}</p>
+      <p><strong>Ausencias:</strong> ${f.abs}</p>
+      <p><strong>N° Licencias:</strong> ${f.lic}</p>
+      <p><strong>Días de licencia:</strong> ${f.licdays}</p>
+      <p><strong>Medidas disciplinarias:</strong> ${f.measures}</p>
+
+      <br><br><br>
+      <table style="width:100%;text-align:center;margin-top:20px;">
+        <tr>
+          <td>
+            ______________________________<br>
+            Firma Jefatura
+          </td>
+          <td>
+            ______________________________<br>
+            Firma Funcionario/a
+          </td>
+        </tr>
+      </table>
+
+      <script>window.print()<\/script>
+    </body>
+    </html>
+  `);
+}
+
+/* =====================================================
+   ESTADO INICIAL + EVENTOS
+===================================================== */
+window.addEventListener("DOMContentLoaded", () => {
+  // Cargar datos
+  seedDefaultUsers();
+  loadFuncionarios();
+  renderRRHH();
+
+  // Año por defecto en formulario RRHH
+  const y = new Date().getFullYear();
+  const yInput = document.getElementById("r_year");
+  if(yInput){ yInput.value = y; }
+
+  // Restaurar sesión si existe
+  const S = localStorage.getItem("SIGADCAP_SESSION");
+  if(S){
+    afterLoginUI();
+  } else {
+    // Mostrar login por defecto
+    const login = document.getElementById("login_screen");
+    if(login) login.classList.remove("hidden");
+  }
+
+  // Formatear RUT en inputs
+  const rutFields = ["r_rut","f_rut","rut_input","rut_public_input"];
+  rutFields.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el){
+      el.addEventListener("input", ()=>formatearInputRut(el));
+      el.addEventListener("keydown", e=>{
+        if(e.key === "Enter"){
+          e.preventDefault();
+          if(id === "rut_input") buscarRUTInterno();
+          if(id === "rut_public_input") buscarRUTPublic();
+        }
+      });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
